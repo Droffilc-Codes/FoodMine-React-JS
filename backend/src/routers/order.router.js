@@ -9,24 +9,48 @@ import { UserModel } from "../models/user.module.js";
 const router = Router()
 router.use(auth)
 
+// router.post(
+//     '/create',
+//     handler(async (req, res)=>{
+//         const order = req.body
+
+//         if(order.items.length <= 0) res.status(BAD_REQUEST).send('Cart is Empty!')
+
+//             await OrderModel.deleteOne({
+//                 user: req.user.id,
+//                 status: OrderStatus.NEW
+
+//             })
+
+//             const newOrder = new OrderModel({...order, user: req.user.id})
+//             await newOrder.save()
+//             res.send(newOrder)
+//     })
+// )
+
 router.post(
     '/create',
-    handler(async (req, res)=>{
-        const order = req.body
-
-        if(order.items.length <= 0) res.status(BAD_REQUEST).send('Cart is Empty!')
-
-            await OrderModel.deleteOne({
-                user: req.user.id,
-                status: OrderStatus.NEW
-
-            })
-
-            const newOrder = new OrderModel({...order, user: req.user.id})
-            await newOrder.save()
-            res.send(newOrder)
+    handler(async (req, res) => {
+      const order = req.body;
+  
+      if (order.items.length <= 0) {
+        return res.status(BAD_REQUEST).send('Cart is Empty!');
+      }
+  
+      // Do not delete the previous order, just create the new order
+      const newOrder = new OrderModel({
+        ...order,
+        user: req.user.id,
+        status: OrderStatus.NEW, // Set status to NEW for the new order
+      });
+      
+      await newOrder.save();
+      res.send(newOrder);
     })
-)
+  );
+  
+
+
 
 router.put('/pay', handler(async (req, res)=> {
     const { paymentId } = req.body
