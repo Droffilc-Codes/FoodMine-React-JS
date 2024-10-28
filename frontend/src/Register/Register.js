@@ -7,6 +7,7 @@ import Button from '../Components/Button/Button'
 import { Link } from 'react-router-dom'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../Hooks/useAuth'
+import { EMAIL } from '../constants/Patterns'
 
 export default function Register() {
     const auth = useAuth()
@@ -40,7 +41,7 @@ export default function Register() {
             <form onSubmit={handleSubmit(submit)} noValidate>
                 <Input type="text" label='Name' {...register('name', {required: true, minLength: 0,})}  error={errors.name}/>
 
-                <Input type="email" label="Email"  {...register('email', { required: true, pattern: { value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,63}$/i, message: 'Email is Not Valid'}})} error={errors.email}/>
+                <Input type="email" label="Email"  {...register('email', { required: true, pattern: EMAIL})} error={errors.email}/>
                 
                 <Input 
                     type="password"

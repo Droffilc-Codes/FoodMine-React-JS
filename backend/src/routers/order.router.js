@@ -5,6 +5,7 @@ import { BAD_REQUEST, UNAUTHORIZED } from "../constants/httpStatus.js";
 import { OrderModel } from "../models/order.model.js";
 import { OrderStatus } from "../constants/OrderStaus.js";
 import { UserModel } from "../models/user.module.js";
+import { sendEmailReceipt } from "../helpers/mail.helpers.js";
 
 const router = Router()
 router.use(auth)
@@ -53,6 +54,7 @@ router.post(
 
 
 router.put('/pay', handler(async (req, res)=> {
+
     const { paymentId } = req.body
     const order = await getNewOrderForCurrentUser(req)
     if(!order){
@@ -62,6 +64,8 @@ router.put('/pay', handler(async (req, res)=> {
     order.paymentId = paymentId
     order.status = OrderStatus.PAYED
     await order.save()
+
+    sendEmailReceipt(order)
 
     res.send(order._id)
 
@@ -119,7 +123,7 @@ router.get(
   );
 
 const getNewOrderForCurrentUser = async req =>
-    await OrderModel.findOne({user: req.user.id, status: OrderStatus.NEW})
+    (await OrderModel.findOne({user: req.user.id, status: OrderStatus.NEW})).populate('user')
 
 
 export default router

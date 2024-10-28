@@ -12,7 +12,6 @@ export default function PaymentPage() {
   useEffect(() => {
     getNewOrderForCurrentUser().then(data => setOrder(data));
   }, []);
-  console.log(order)
   if (!order) return;
 
   return (

@@ -27,3 +27,16 @@ export const getById = async foodId => {
     return data
 }
 
+
+export const deleteFoodById = async foodId =>{
+    await axios.delete('api/foods/' + foodId)
+}
+
+export const updateFood = async food =>{
+    await axios.put('api/foods/', food)
+}
+
+export const addFood = async food =>{
+    const { data } = await axios.post('api/foods/', food)
+    return data
+}

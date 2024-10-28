@@ -42,7 +42,7 @@ export default function HomePage() {
   
   return (
     <>
-      <Search />
+      <Search  placeholder='Search Food Mine'/>
       <Tags tags={tags} />
       {foods.length === 0 && <NotFound linkText={"Reset Search"}/>}
       <Thumbnails foods={foods} />

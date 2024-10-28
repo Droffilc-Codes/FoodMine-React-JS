@@ -31,7 +31,6 @@ export default function CheckoutPage() {
       toast.warning('Please select your location on the map!')
     }
     await createOrder({...order, name: data.name, address:data.address})
-    console.log(order.date)
     navigate('/payment')
   }
 
@@ -64,7 +63,6 @@ export default function CheckoutPage() {
               location={order.addressLatLng}
               onChange={latLng => {
                 setOrder({...order, addressLatLng: latLng})
-                console.log(latLng)
               }}
             />
         </div>

@@ -7,6 +7,7 @@ import Title from '../../Components/Title/Title'
 import Input from '../../Components/Input/Input'
 import Button from '../../Components/Button/Button'
 import { Link } from 'react-router-dom'
+import { EMAIL } from '../../constants/Patterns'
 
 export default function LoginPage() {
     
@@ -39,10 +40,7 @@ const submit = async ({ email, password }) => {
             label="Email"
             {...register('email', {
               required: true,
-              pattern: {
-                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,63}$/i,
-                message: 'Email Is Not Valid',
-              },
+              pattern: EMAIL,
             })}
             error={errors.email}
           />
