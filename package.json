@@ -2,12 +2,13 @@
   "name": "foodmine-react-js",
   "version": "1.0.0",
   "main": "index.js",
- "scripts": {
-  "prebuild": "cd backend && npm install && cd .. && cd frontend && npm install",
-  "start": "cd backend && npm start",
-  "build": "cd frontend && npm run build",
-  "postbuild": "rmdir /S /Q backend\\src\\public && move frontend\\build backend\\src\\public"
-},
+  "scripts": {
+    "start": "cd backend && npm start",
+   "prebuild": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "postbuild": "mv -f frontend/build backend/src/public"
+   },
+ 
   "keywords": [],
   "author": "",
   "license": "ISC",
